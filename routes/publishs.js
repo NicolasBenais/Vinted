@@ -76,6 +76,4 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
   }
 });
 
-// Update offers
-
 module.exports = router;
