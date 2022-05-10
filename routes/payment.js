@@ -5,11 +5,11 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 router.post("/payment", async (req, res) => {
   try {
     const stripeToken = req.fields.stripeToken;
-    const productPrice = req.fields.price;
+    const totalPrice = req.fields.totalPrice;
     const productName = req.fields.title;
 
     const response = await stripe.charges.create({
-      amount: productPrice * 100,
+      amount: totalPrice * 100,
       currency: "eur",
       description: productName,
       source: stripeToken,
