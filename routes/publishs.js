@@ -33,7 +33,6 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
             ],
             owner: user,
           });
-
           // Product picture
           const productPicture = await cloudinary.uploader.upload(
             req.files.picture.path,
@@ -57,6 +56,7 @@ router.post("/offer/publish", isAuthenticated, async (req, res) => {
             product_details: newPublish.product_details,
             owner: {
               account: newPublish.owner.account,
+
               _id: newPublish.owner._id,
             },
             product_image: newPublish.product_image,

@@ -6,20 +6,20 @@ const router = express.Router();
 router.get("/offers", async (req, res) => {
   try {
     // Limit by page
-    let limit = 3;
-    if (req.query.limit) {
-      limit = req.query.limit;
-    }
+    // let limit = 15;
+    // if (req.query.limit) {
+    //   limit = req.query.limit;
+    // }
     // Page
-    let page = 1;
-    if (req.query.page) {
-      page = req.query.page;
-    }
+    // let page = 1;
+    // if (req.query.page) {
+    //   page = req.query.page;
+    // }
 
     // All filters
     const filter = {};
-
-    // If I enter a object
+    console.log(req.query);
+    // If I enter an object name
     if (req.query.product_name) {
       filter.product_name = new RegExp(req.query.product_name, "i");
     }
@@ -48,8 +48,7 @@ router.get("/offers", async (req, res) => {
       const offer = await Offer.find(filter)
         .sort({ product_price: req.query.product_price })
         .limit(limit)
-        .skip(limit * page - limit)
-        .select("product_name product_price");
+        .skip(limit * page - limit);
 
       if (offer.length > 0) {
         const count = await Offer.countDocuments(filter);
@@ -62,8 +61,8 @@ router.get("/offers", async (req, res) => {
     } else {
       const offer = await Offer.find(filter)
         .limit(limit)
-        .skip(limit * page - limit)
-        .select("product_name product_price");
+        .skip(limit * page - limit);
+
       if (offer.length > 0) {
         const count = await Offer.countDocuments(filter);
         res.status(200).json({ count: count, offers: offer });
